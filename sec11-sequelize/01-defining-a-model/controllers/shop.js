@@ -72,9 +72,8 @@ exports.postCart = async (req, res, next) => {
   let quantity = 1;
   const product = await Product.findByPk(prodId);
   const cart = await req.user.getCart();
-  const cartHasProduct = await cart.hasProduct(product);
-  if (cartHasProduct) {
-    const [productInCart] = await cart.getProducts({ where: { id: prodId } });
+  const [productInCart] = await cart.getProducts({ where: { id: prodId } });
+  if (productInCart) {
     quantity = productInCart.cartItem.quantity + 1;
   }
   await cart.addProduct(product, { through: { quantity }});
