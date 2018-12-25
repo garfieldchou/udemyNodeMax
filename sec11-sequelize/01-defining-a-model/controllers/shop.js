@@ -103,19 +103,19 @@ exports.postOrder = async (req, res, next) => {
     product.orderItem = { quantity: product.cartItem.quantity };
     return product;
   }));
+  await cart.setProducts(null);
   res.redirect('/orders');
 };
 
 exports.getOrders = (req, res, next) => {
-  res.render('shop/orders', {
-    path: '/orders',
-    pageTitle: 'Your Orders'
-  });
-};
-
-exports.getCheckout = (req, res, next) => {
-  res.render('shop/checkout', {
-    path: '/checkout',
-    pageTitle: 'Checkout'
-  });
+  req.user
+    .getOrders({ include: [{ model: Product }] })
+    .then(orders => {
+      res.render('shop/orders', {
+        path: '/orders',
+        pageTitle: 'Your Orders',
+        orders
+      });
+    })
+    .catch(err => console.log(err));
 };
