@@ -52,6 +52,13 @@ class User {
       .find({ _id: {$in: productIds}})
       .toArray()
       .then(products => {
+        const productIds = products.map(i => i._id.toString());
+        const updatedCartItem = this.cart.items.filter(item => productIds.includes(item.productId.toString()));
+        db
+          .collection('users')
+          .updateOne(
+            { _id: new ObjectId(this._id) },
+            { $set: { 'cart.items': updatedCartItem } });
         return products.map(p => {
           return {
             ...p,
