@@ -51,6 +51,12 @@ userSchmea.methods.removeFromCart = function(productId) {
   return this.save();
 };
 
+userSchmea.methods.clearCart = function() {
+  this.cart = { items: [] };
+  return this.save();
+};
+
+
 module.exports = mongoose.model('User', userSchmea);
 
 // const { ObjectId } = require('mongodb');
