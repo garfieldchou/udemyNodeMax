@@ -92,7 +92,7 @@ exports.postOrder = (req, res, next) => {
       });
       const order = new Order({
         user: {
-          name: req.user.email,
+          email: req.user.email,
           userId: req.user
         },
         products: products
@@ -105,9 +105,7 @@ exports.postOrder = (req, res, next) => {
     .then(() => {
       res.redirect('/orders');
     })
-    .catch(err => {
-      console.log(err);
-    });
+    .catch(err => console.log(err));
 };
 
 exports.getOrders = (req, res, next) => {
