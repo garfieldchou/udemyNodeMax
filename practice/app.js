@@ -7,11 +7,13 @@ const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const csrf = require('csurf');
 const flash = require('connect-flash');
+const { config } = require('dotenv');
 
 const errorController = require('./controllers/error');
 const User = require('./models/user');
 
-const MONGODB_URI = 'mongodb+srv://gc:<PASSWORD>@cluster0-f5nti.mongodb.net/shop?retryWrites=true';
+config();
+const MONGODB_URI = process.env.DB_URI;
 
 const app = express();
 const store = new MongoDBStore({
