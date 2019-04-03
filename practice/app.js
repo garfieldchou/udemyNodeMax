@@ -49,7 +49,7 @@ app.use((req, res, next) => {
 });
 
 app.use((req, res, next) => {
-  throw new Error('Sync Dummy');
+  // throw new Error('Sync Dummy');
   if (!req.session.user) {
     return next();
   }
@@ -62,7 +62,7 @@ app.use((req, res, next) => {
       next();
     })
     .catch(err => {
-      throw new Error(err);
+      next(new Error(err));
     });
 });
 
